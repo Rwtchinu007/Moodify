@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Password is required"],
+    select: false,
+    // we use select: false to prevent the password from being returned in queries by default
   },
 });
 
