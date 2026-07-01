@@ -2,6 +2,7 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const blacklistModel = require("../models/blacklist.model");
+const redis = require("../config/cache");
 
 async function registerUser(req, res) {
   const { username, email, password } = req.body;
@@ -61,8 +62,10 @@ async function getMe(req, res) {
 async function logoutUser(req, res) {
   const token = req.cookies.token;
   res.clearCookie("token");
-  await blacklistModel.create({ token });
-  
+  await redis.set(token, Date.now().toString(), "EX", 3600); // Set the token in Redis with an expiration time of 1 hour (3600 seconds)
+
+  // redis stores data in key-value pairs, so you can use the token as the key and the timestamp as the value. You can also set an expiration time for the token in redis, so that it will be automatically removed from the blacklist after a certain period of time.
+
   res.status(200).json({
     message: "logout successfully",
   });
