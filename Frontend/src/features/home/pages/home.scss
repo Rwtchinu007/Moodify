@@ -1,0 +1,126 @@
+.home-container {
+  --accent: #1ed760;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  padding-bottom: 90px;
+  background-color: #121212;
+  overflow: hidden;
+}
+
+.home-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.home-glow__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  transform: scale(0.85);
+  animation-play-state: paused;
+  transition: opacity 1.2s ease, background 0.6s ease;
+}
+
+.home-glow__orb--a {
+  width: 46vw;
+  height: 46vw;
+  top: -10%;
+  left: -8%;
+  animation: home-drift-a 22s ease-in-out infinite;
+}
+
+.home-glow__orb--b {
+  width: 38vw;
+  height: 38vw;
+  bottom: -12%;
+  right: -6%;
+  animation: home-drift-b 26s ease-in-out infinite;
+}
+
+.home-glow__orb--c {
+  width: 30vw;
+  height: 30vw;
+  top: 40%;
+  left: 55%;
+  animation: home-drift-c 18s ease-in-out infinite;
+}
+
+.is-playing .home-glow__orb {
+  opacity: 0.55;
+  animation-play-state: running;
+}
+
+@keyframes home-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(0.9); }
+  50% { transform: translate(6vw, 8vh) scale(1.05); }
+}
+
+@keyframes home-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5vw, -6vh) scale(0.9); }
+}
+
+@keyframes home-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(0.8); }
+  50% { transform: translate(-4vw, 5vh) scale(1); }
+}
+
+.home-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    transition: text-shadow 0.6s ease;
+  }
+
+  p {
+    color: #a7a7a7;
+    font-size: 1rem;
+  }
+}
+
+.is-playing .home-header h1 {
+  text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.expression-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.logout-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  z-index: 2;
+  background: transparent;
+  color: #a7a7a7;
+  border: 1px solid #727272;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+}

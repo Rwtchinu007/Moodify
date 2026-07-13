@@ -37,14 +37,31 @@ async function uploadSong(req, res) {
 async function getSong(req, res) {
   const { mood } = req.query;
 
-  const song = await songModel.findOne({
-    mood,
-  });
+  try {
+    // 1. Use aggregation to match the mood and randomly sample 1 song
+    const randomSongs = await songModel.aggregate([
+      { $match: { mood: mood } },
+      { $sample: { size: 1 } }
+    ]);
 
-  res.status(200).json({
-    message: "song fetched successfully.",
-    song,
-  });
+    // 2. Aggregate always returns an array. Check if we found anything.
+    if (randomSongs.length === 0) {
+      return res.status(404).json({
+        message: "No songs found for this mood.",
+      });
+    }
+
+    // 3. Send the single randomly selected song back to the frontend
+    res.status(200).json({
+      message: "song fetched successfully.",
+      song: randomSongs[0], 
+    });
+    
+  } catch (error) {
+    console.error("Error fetching random song:", error);
+    res.status(500).json({
+      message: "Internal server error while fetching song.",
+    });
+  }
 }
-
 module.exports = { uploadSong, getSong };

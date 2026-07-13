@@ -6,9 +6,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router'
 
 const Login = () => {
-
     const { loading, handleLogin } = useAuth()
-
     const navigate = useNavigate()
 
     const [ email, setEmail ] = useState("")
@@ -22,6 +20,13 @@ const Login = () => {
 
     return (
         <main className="login-page">
+            {/* --- The New Smooth Ocean Layers --- */}
+            <div className="ocean-bg">
+                <div className="wave wave-1"></div>
+                <div className="wave wave-2"></div>
+                <div className="wave wave-3"></div>
+            </div>
+
             <div className="form-container">
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit} >

@@ -1,58 +1,156 @@
-.login-page {
+/* --- Ultra Smooth Liquid Wave Animation --- */
+@keyframes smoothWave {
+  0% {
+    transform: rotate(0deg) translateY(-2%);
+  }
+  50% {
+    transform: rotate(180deg) translateY(2%);
+  }
+  100% {
+    transform: rotate(360deg) translateY(-2%);
+  }
+}
+
+.login-page { /* Remember to change this to .register-page for that file */
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;  
+  min-height: 100vh;
+  background-color: var(--bg-main, #0a0a0a);
+  overflow: hidden; 
+  z-index: 1;
+
+  /* --- The Ocean Background Container --- */
+  .ocean-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    /* Deep ocean gradient fade at the top */
+    background: linear-gradient(180deg, var(--bg-main, #0a0a0a) 0%, #0d1b2a 100%);
+  }
+
+  /* Base styling for all waves */
+  .wave {
+    position: absolute;
+    left: 50%;
+    /* Massive width creates the long horizontal wave surface */
+    width: 250vw;
+    height: 250vw;
+    margin-left: -125vw; /* Perfectly centers it */
+    transform-origin: 50% 50%;
+    filter: blur(50px); /* Just enough blur for liquid blending */
+    mix-blend-mode: screen; /* Makes the overlapping colors vibrant and glowing */
+  }
+
+  /* Layer 1: The Cyan Base Swell */
+  .wave-1 {
+    top: 45%;
+    background: rgba(0, 240, 255, 0.4); 
+    animation: smoothWave 22s infinite linear;
+    /* Irregular border-radius creates the organic liquid shape */
+    border-radius: 43% 57% 40% 60% / 45% 50% 55% 40%;
+  }
+
+  /* Layer 2: The Spotify Green Mid-Wave */
+  .wave-2 {
+    top: 50%;
+    background: rgba(29, 185, 84, 0.45); 
+    animation: smoothWave 18s infinite linear reverse;
+    border-radius: 40% 60% 55% 45% / 50% 55% 45% 50%;
+  }
+
+  /* Layer 3: The Deep Blue Crest */
+  .wave-3 {
+    top: 55%;
+    background: rgba(13, 110, 253, 0.3); 
+    animation: smoothWave 26s infinite linear;
+    border-radius: 50% 50% 45% 55% / 45% 55% 50% 50%;
+  }
+
+  /* --- Form Container (Frosted Glass Effect) --- */
   .form-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background-color: #222121;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-width: 350px;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    .form-group {
+    gap: 1.5rem;
+    
+    background: rgba(20, 20, 20, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    
+    padding: 2.5rem;
+    border-radius: 16px;
+    min-width: 380px;
+    z-index: 2;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
 
-      label {
-        font-size: 1.1rem;
-      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
 
-      input {
-        padding: 0.75rem;
-        border: 1px solid #333;
-        border-radius: 4px;
-        background-color: #2c2c2c;
-        color: #fff;
-        font-size: 0.8rem;
-        &:focus {
-          outline: none;
-          border-color: #be3333;
+        label {
+          font-size: 0.95rem;
+          color: var(--text-main, #fff);
+          font-weight: 500;
         }
-        &::placeholder {
-          color: #cec8c8;
+
+        input {
+          padding: 0.85rem 1rem;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          background-color: rgba(0, 0, 0, 0.35);
+          color: #fff;
+          font-size: 0.9rem;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: var(--accent-secondary, #1ED760);
+            box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
+            background-color: rgba(0, 0, 0, 0.5);
+          }
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+          }
         }
       }
     }
-  }
-  p{
-    color: #fff;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-top: 0.5rem;
-    a {
-      color: #be3333;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
+
+    p {
+      color: var(--text-muted, #a0a0a0);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 1rem;
+
+      a {
+        color: var(--accent-secondary, #1ED760);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #fff;
+          text-decoration: underline;
+        }
       }
     }
   }

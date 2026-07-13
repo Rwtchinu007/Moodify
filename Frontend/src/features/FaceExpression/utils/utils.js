@@ -28,7 +28,12 @@ export const init = async ({ landmarkerRef, videoRef, streamRef }) => {
 };
 
 export const detect = ({ landmarkerRef, videoRef, setExpression }) => {
-    if (!landmarkerRef.current || !videoRef.current) return;
+    const videoReady = videoRef.current && videoRef.current.videoWidth && videoRef.current.videoHeight;
+
+    if (!landmarkerRef.current || !videoReady) {
+        setExpression("Camera not ready");
+        return;
+    }
 
     const results = landmarkerRef.current.detectForVideo(
         videoRef.current,
@@ -62,6 +67,6 @@ export const detect = ({ landmarkerRef, videoRef, setExpression }) => {
 
         setExpression(currentExpression);
 
-        return currentExpression
+        return currentExpression; 
     }
 };
