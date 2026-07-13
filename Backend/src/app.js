@@ -26,8 +26,8 @@ app.use("/api/songs", songRoutes);
 // FIX 1: Use an absolute path to serve static files securely
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-// FIX 2: Use app.get("*") to ensure only GET requests fall back to React
-app.get("*", (req, res) => {
+// FIX 2: Use regex /(.*)/ for Express 5+ compatibility
+app.get(/(.*)/, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
