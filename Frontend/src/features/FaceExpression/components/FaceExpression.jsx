@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { detect, init } from "../utils/utils";
+import "./face-expression.scss";
 
 export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null);
@@ -21,124 +22,75 @@ export default function FaceExpression({ onClick = () => {} }) {
     };
   }, []);
 
-  async function handleClick() {
+async function handleClick() {
+    if (isScanning) return; 
     setIsScanning(true);
-    setExpression("Reading…");
+    setExpression("Analyzing...");
+    
+    // 1. Attempt detection
     const detectedExpression = detect({ landmarkerRef, videoRef, setExpression });
-    console.log(detectedExpression);
+    
+    // 2. CRITICAL FIX: Stop loop if no face is found
+    if (!detectedExpression) {
+        setExpression("No face detected");
+        setTimeout(() => {
+            setExpression("Standby");
+            setIsScanning(false);
+        }, 1500);
+        return; 
+    }
+
     onClick(detectedExpression);
     setTimeout(() => setIsScanning(false), 1200);
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "18px",
-        padding: "22px",
-        backgroundColor: "rgba(20, 20, 22, 0.65)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderRadius: "24px",
-        boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
-        width: "90%",
-        minWidth: "320px",
-        maxWidth: "430px",
-        margin: "0 auto",
-        fontFamily: "'Inter', system-ui, sans-serif",
-      }}
-    >
+    <div className={`premium-scanner ${isScanning ? 'is-scanning' : ''}`}>
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          fontSize: "0.7rem",
-          letterSpacing: "0.1em",
-          color: "rgba(255,255,255,0.5)",
-          textTransform: "uppercase",
-        }}
-      >
-        <span>Expression Scanner</span>
-        <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span
-            style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              backgroundColor: isScanning ? "#E8E6E1" : "rgba(255,255,255,0.25)",
-            }}
-          />
-          {isScanning ? "Live" : "Idle"}
-        </span>
-      </div>
-
-      {/* Video */}
-      <video
-        ref={videoRef}
-        style={{
-          width: "100%",
-          aspectRatio: "4 / 3",
-          objectFit: "cover",
-          borderRadius: "18px",
-          backgroundColor: "#000000",
-        }}
-        playsInline
-      />
-
-      {/* Readout */}
-      <div
-        style={{
-          border: "1px solid rgba(255,255,255,0.08)",
-          borderRadius: "16px",
-          padding: "14px 16px",
-          backgroundColor: "rgba(255,255,255,0.03)",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "0.65rem",
-            letterSpacing: "0.08em",
-            color: "rgba(255,255,255,0.4)",
-            marginBottom: "6px",
-            textTransform: "uppercase",
-          }}
-        >
-          Result
-        </div>
-        <div
-          style={{
-            fontSize: "1.15rem",
-            fontWeight: 600,
-            color: "#F5F4F1",
-            minHeight: "1.4em",
-          }}
-        >
-          {expression}
+      <div className="scanner-header">
+        <span className="scanner-title">Live Capture</span>
+        <div className="status-badge">
+          <span className={`status-dot ${isScanning ? 'live' : 'idle'}`} />
+          <span className="status-text">{isScanning ? "Processing" : "Ready"}</span>
         </div>
       </div>
 
-      {/* Action */}
-      <button
-        style={{
-          width: "80%",
-          background: "#E8E6E1",
-          color: "#1A1A1A",
-          border: "none",
-          borderRadius: "14px",
-          padding: "14px 20px",
-          fontFamily: "inherit",
-          fontWeight: 600,
-          fontSize: "0.95rem",
-          cursor: "pointer",
-          margin: "0 auto",
-        }}
+      {/* Video Feed with Soft Glowing Accents */}
+      <div className="video-container">
+        <video 
+          ref={videoRef} 
+          className="camera-feed" 
+          playsInline 
+          autoPlay 
+          muted 
+        />
+        {/* Soft, minimalist corners instead of harsh brackets */}
+        <div className="frame-corner top-left"></div>
+        <div className="frame-corner top-right"></div>
+        <div className="frame-corner bottom-left"></div>
+        <div className="frame-corner bottom-right"></div>
+        
+        {/* Elegant sweeping light effect */}
+        {isScanning && <div className="soft-scan-overlay" />}
+      </div>
+
+      {/* Dynamic Data Readout */}
+      <div className="result-display">
+        <span className="result-label">Detected Signature</span>
+        <div className="result-value-wrapper">
+          <h3 key={expression} className="result-value">
+            {expression}
+          </h3>
+        </div>
+      </div>
+
+      {/* Premium Pill Button */}
+      <button 
+        className="scan-btn" 
         onClick={handleClick}
+        disabled={isScanning}
       >
-        Detect Expression
+        {isScanning ? "Reading Expressions..." : "Detect Mood"}
       </button>
     </div>
   );

@@ -3,14 +3,12 @@ import { router } from "./app.routes";
 import "./features/shared/styles/global.scss";
 import { AuthProvider } from "./features/auth/auth.context";
 import { SongContextProvider } from "./features/home/song.context";
-const App = () => {
+export default function App() {
   return (
     <AuthProvider>
       <SongContextProvider>
-        <RouterProvider router={router} />;
+        <RouterProvider router={router} />
       </SongContextProvider>
     </AuthProvider>
   );
-};
-
-export default App;
+}

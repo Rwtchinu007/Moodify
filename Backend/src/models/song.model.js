@@ -16,8 +16,9 @@ const songSchema = new mongoose.Schema({
   mood: {
     type: String,
     enum: {
-      values: ["sad", "happy", "surprised"],
-      message: "Enum this is",
+      // FIX: Added "neutral" to support the new frontend logic
+      values: ["sad", "happy", "surprised", "neutral"], 
+      message: "{VALUE} is not a supported mood",
     },
   },
 });

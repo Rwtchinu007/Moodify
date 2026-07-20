@@ -11,14 +11,14 @@
   }
 }
 
-.register-page { 
+.register-page {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: var(--bg-main, #0a0a0a);
-  overflow: hidden; 
+  overflow: hidden;
   z-index: 1;
 
   /* --- The Ocean Background Container --- */
@@ -31,7 +31,11 @@
     overflow: hidden;
     z-index: -1;
     /* Deep ocean gradient fade at the top */
-    background: linear-gradient(180deg, var(--bg-main, #0a0a0a) 0%, #0d1b2a 100%);
+    background: linear-gradient(
+      180deg,
+      var(--bg-main, #0a0a0a) 0%,
+      #0d1b2a 100%
+    );
   }
 
   /* Base styling for all waves */
@@ -50,7 +54,7 @@
   /* Layer 1: Electric Mint Base Swell */
   .wave-1 {
     top: 45%;
-    background: rgba(0, 255, 170, 0.4); 
+    background: rgba(0, 255, 170, 0.4);
     animation: smoothWave 22s infinite linear;
     border-radius: 43% 57% 40% 60% / 45% 50% 55% 40%;
   }
@@ -58,7 +62,7 @@
   /* Layer 2: The Spotify Green Mid-Wave */
   .wave-2 {
     top: 50%;
-    background: rgba(29, 185, 84, 0.45); 
+    background: rgba(29, 185, 84, 0.45);
     animation: smoothWave 18s infinite linear reverse;
     border-radius: 40% 60% 55% 45% / 50% 55% 45% 50%;
   }
@@ -66,7 +70,7 @@
   /* Layer 3: Neon Lime Crest */
   .wave-3 {
     top: 55%;
-    background: rgba(204, 255, 0, 0.25); 
+    background: rgba(204, 255, 0, 0.25);
     animation: smoothWave 26s infinite linear;
     border-radius: 50% 50% 45% 55% / 45% 55% 50% 50%;
   }
@@ -76,16 +80,16 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    
+
     background: rgba(20, 20, 20, 0.65);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    
-    padding: 2.5rem;
+
+    padding: 3rem;
     border-radius: 16px;
-    min-width: 380px;
+    min-width: 360px;
     z-index: 2;
 
     h1 {
@@ -122,7 +126,7 @@
 
           &:focus {
             outline: none;
-            border-color: var(--accent-secondary, #1ED760);
+            border-color: var(--accent-secondary, #1ed760);
             box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
             background-color: rgba(0, 0, 0, 0.5);
           }
@@ -141,7 +145,7 @@
       margin-top: 1rem;
 
       a {
-        color: var(--accent-secondary, #1ED760);
+        color: var(--accent-secondary, #1ed760);
         text-decoration: none;
         font-weight: 600;
         transition: color 0.2s ease;
@@ -151,6 +155,20 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+/* ==========================================================================
+   MOBILE RESPONSIVENESS (AUTH)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .form-container {
+    min-width: 85%;
+    padding: 3rem 4rem;
+    margin: 0 1rem;
+
+    h1 {
+      font-size: 1.75rem;
     }
   }
 }

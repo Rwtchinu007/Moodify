@@ -1,18 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api/songs",
+  baseURL: "", 
   withCredentials: true,
 });
 
 export async function getSong({ mood }) {
-  const response = await api.get("?mood=" + mood);
+  const response = await api.get("/api/songs?mood=" + mood);
   return response.data;
 }
 
-// New upload function
 export async function uploadSongApi(formData) {
-  const response = await api.post("/", formData, {
+  const response = await api.post("/api/songs/", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

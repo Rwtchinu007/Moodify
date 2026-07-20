@@ -84,9 +84,9 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     
-    padding: 2.5rem;
+    padding: 3rem;
     border-radius: 16px;
-    min-width: 380px;
+    min-width: 360px;
     z-index: 2;
 
     h1 {
@@ -152,6 +152,20 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+/* ==========================================================================
+   MOBILE RESPONSIVENESS (AUTH)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .form-container {
+    min-width: 85%;
+    padding: 3rem 4rem;
+    margin: 0rem 1rem;
+    
+    h1 {
+      font-size: 1.75rem;
     }
   }
 }
