@@ -11,7 +11,7 @@
   }
 }
 
-.register-page { /* Remember to change this to .register-page for that file */
+.register-page {
   position: relative;
   display: flex;
   justify-content: center;
@@ -21,7 +21,6 @@
   overflow: hidden; 
   z-index: 1;
 
-  /* --- The Ocean Background Container --- */
   .ocean-bg {
     position: absolute;
     top: 0;
@@ -30,33 +29,27 @@
     height: 100%;
     overflow: hidden;
     z-index: -1;
-    /* Deep ocean gradient fade at the top */
     background: linear-gradient(180deg, var(--bg-main, #0a0a0a) 0%, #0d1b2a 100%);
   }
 
-  /* Base styling for all waves */
   .wave {
     position: absolute;
     left: 50%;
-    /* Massive width creates the long horizontal wave surface */
     width: 250vw;
     height: 250vw;
-    margin-left: -125vw; /* Perfectly centers it */
+    margin-left: -125vw;
     transform-origin: 50% 50%;
-    filter: blur(50px); /* Just enough blur for liquid blending */
-    mix-blend-mode: screen; /* Makes the overlapping colors vibrant and glowing */
+    filter: blur(50px);
+    mix-blend-mode: screen;
   }
 
-  /* Layer 1: The Cyan Base Swell */
   .wave-1 {
     top: 45%;
     background: rgba(0, 240, 255, 0.4); 
     animation: smoothWave 22s infinite linear;
-    /* Irregular border-radius creates the organic liquid shape */
     border-radius: 43% 57% 40% 60% / 45% 50% 55% 40%;
   }
 
-  /* Layer 2: The Spotify Green Mid-Wave */
   .wave-2 {
     top: 50%;
     background: rgba(29, 185, 84, 0.45); 
@@ -64,7 +57,6 @@
     border-radius: 40% 60% 55% 45% / 50% 55% 45% 50%;
   }
 
-  /* Layer 3: The Deep Blue Crest */
   .wave-3 {
     top: 55%;
     background: rgba(13, 110, 253, 0.3); 
@@ -72,7 +64,6 @@
     border-radius: 50% 50% 45% 55% / 45% 55% 50% 50%;
   }
 
-  /* --- Form Container (Frosted Glass Effect) --- */
   .form-container {
     display: flex;
     flex-direction: column;
@@ -155,31 +146,64 @@
     }
   }
 }
+
 /* ==========================================================================
    MOBILE RESPONSIVENESS (AUTH)
    ========================================================================== */
 @media (max-width: 480px) {
   .login-page {
-    /* Small breathing room so the card never touches the screen edges */
-    padding: 1rem;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   .form-container {
-    /* Root cause of the overflow: `min-width: 85%` PLUS a fixed
-       `padding: 3rem 4rem` (with default content-box sizing) added up
-       to well over 100% of the viewport width on small screens.
-       box-sizing:border-box makes padding count *inside* the width,
-       and swapping min-width for width+max-width keeps the card from
-       ever exceeding the screen. */
+    /* Pinned to the true viewport center via fixed positioning —
+       this makes it immune to any extra height the page picks up
+       from its surroundings (that's why it was sitting high with a
+       big empty gap below it instead of being centered on-screen). */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     box-sizing: border-box;
-    width: 100%;
-    max-width: 380px;
+
+    /* Small, with generous breathing room on every side */
+    width: 78vw;
+    max-width: 280px;
     min-width: 0;
-    padding: 2rem 1.75rem;
     margin: 0;
 
+    padding: 1.4rem 1.25rem;
+    border-radius: 14px;
+    gap: 0.9rem;
+
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    form {
+      gap: 0.75rem;
+
+      .form-group {
+        gap: 0.3rem;
+
+        label {
+          font-size: 0.78rem;
+        }
+
+        input {
+          padding: 0.6rem 0.75rem;
+          font-size: 0.8rem;
+          border-radius: 7px;
+        }
+      }
+    }
+
+    p {
+      font-size: 0.75rem;
+      margin-top: 0.4rem;
     }
   }
 }
