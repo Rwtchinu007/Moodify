@@ -159,11 +159,25 @@
    MOBILE RESPONSIVENESS (AUTH)
    ========================================================================== */
 @media (max-width: 480px) {
+  .login-page {
+    /* Small breathing room so the card never touches the screen edges */
+    padding: 1rem;
+  }
+
   .form-container {
-    min-width: 85%;
-    padding: 3rem 4rem;
-    margin: 0rem 1rem;
-    
+    /* Root cause of the overflow: `min-width: 85%` PLUS a fixed
+       `padding: 3rem 4rem` (with default content-box sizing) added up
+       to well over 100% of the viewport width on small screens.
+       box-sizing:border-box makes padding count *inside* the width,
+       and swapping min-width for width+max-width keeps the card from
+       ever exceeding the screen. */
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+    padding: 2rem 1.75rem;
+    margin: 0;
+
     h1 {
       font-size: 1.75rem;
     }
